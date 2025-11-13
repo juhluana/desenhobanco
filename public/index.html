@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>🎨 Desenhos Animados</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🧸<br>Meus Desenhos Animados Favoritos</h1>
+
+    <ul id="lista-desenhos"></ul>
+
+    <h2>Adicionar Novo Desenho</h2>
+    <form id="form-desenho">
+      <input type="text" id="titulo" placeholder="Qual é o nome do desenho?" required>
+      <input type="text" id="genero" placeholder="Qual é o gênero?" required>
+      <input type="number" id="ano" placeholder="Ano de lançamento" required>
+      <input type="text" id="estudio" placeholder="Estúdio de animação" required>
+      <select id="tipo" required>
+        <option value="Série Animada">Série Animada</option>
+        <option value="Filme Animado">Filme Animado</option>
+      </select>
+      <button type="submit">Adicionar ao Catálogo</button>
+    </form>
+  </div>
+
+  <script>
+    // Carregar desenhos do localStorage
+    function carregarDesenhos() {
+      const lista = document.getElementById('lista-desenhos');
+      lista.innerHTML = '';
+
+      const desenhos = JSON.parse(localStorage.getItem('desenhos')) || [];
+
+      desenhos.forEach((d, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <strong>${d.titulo}</strong> (${d.ano})<br>
+          <em>${d.genero}</em> • ${d.tipo}<br>
+          🏢 <small>${d.estudio}</small>
+        `;
+        lista.appendChild(li);
+      });
+    }
+
+    // Adicionar novo desenho
+    document.getElementById('form-desenho').addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const titulo = document.getElementById('titulo').value;
+      const genero = document.getElementById('genero').value;
+      const ano = document.getElementById('ano').value;
+      const estudio = document.getElementById('estudio').value;
+      const tipo = document.getElementById('tipo').value;
+
+      const novoDesenho = { titulo, genero, ano, estudio, tipo };
+
+      // Pega lista existente no localStorage
+      const desenhos = JSON.parse(localStorage.getItem('desenhos')) || [];
+
+      // Adiciona novo item
+      desenhos.push(novoDesenho);
+
+      // Salva de volta no localStorage
+      localStorage.setItem('desenhos', JSON.stringify(desenhos));
+
+      // Atualiza a lista na tela
+      carregarDesenhos();
+
+      // Limpa o formulário
+      document.getElementById('form-desenho').reset();
+    });
+
+    // Carrega ao abrir a página
+    carregarDesenhos();
+  </script>
+</body>
+</html>

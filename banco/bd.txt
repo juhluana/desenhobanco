@@ -1,0 +1,22 @@
+-- Criar banco de dados
+CREATE DATABASE desenhos_animados CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE desenhos_animados;
+
+-- Criar tabela de desenhos animados
+CREATE TABLE catalogo (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  titulo VARCHAR(100) NOT NULL,
+  genero VARCHAR(50) NOT NULL,
+  ano INT CHECK (ano >= 1900),
+  estudio VARCHAR(100),
+  tipo ENUM('Série Animada', 'Filme Animado') DEFAULT 'Série Animada',
+  avaliacao DECIMAL(3,1) DEFAULT 0.0
+);
+
+-- Inserir alguns registros de exemplo
+INSERT INTO catalogo (titulo, genero, ano, estudio, tipo, avaliacao) VALUES
+('Bob Esponja Calça Quadrada', 'Comédia', 1999, 'Nickelodeon', 'Série Animada', 9.0),
+('Toy Story', 'Aventura', 1995, 'Pixar', 'Filme Animado', 8.7),
+('Os Simpsons', 'Comédia', 1989, 'Fox', 'Série Animada', 8.6),
+('Frozen', 'Fantasia', 2013, 'Disney', 'Filme Animado', 8.2),
+('Hora de Aventura', 'Fantasia', 2010, 'Cartoon Network', 'Série Animada', 9.3);
